@@ -1,2 +1,7 @@
 # DataStructAssignment02
-NYP Assignment 2
+NYP
+DM2126
+Data Structure
+Assignment 2
+
+=========================
