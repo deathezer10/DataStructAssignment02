@@ -36,10 +36,10 @@ int main()
     // part 1
     cout << "Part 1" << endl;
     LinkedList ll;
-    ll.push_front(1);
-    ll.push_back(1);
-    cout << ll.size() << endl;
-    cout << ll.pop_back() << endl;
+	ll.push_front(333);
+	ll.push_back(111);
+	cout << ll.size() << endl;
+	cout << ll.pop_back() << endl;
     cout << ll.pop_front() << endl;
     cout << ll.pop_back() << endl;
     ll.insert_at(2, 10);
