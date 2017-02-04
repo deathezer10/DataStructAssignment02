@@ -42,17 +42,23 @@ int main()
 	cout << ll.pop_back() << endl;
     cout << ll.pop_front() << endl;
     cout << ll.pop_back() << endl;
-    ll.insert_at(2, 10);
-    cout << ll.pop_at(0) << endl;
+    ll.insert_at(5, 10);
+    cout << ll.pop_at(1) << endl;
     cout << endl;
-
+	
     // part 2
     cout << "Part 2" << endl;
     Queue q;
-    q.enqueue(20);
-    q.enqueue(42);
-    cout << q.dequeue() << endl;
-    cout << q.size() << endl;
+    q.enqueue(1);
+	cout << q.dequeue() << endl;
+	q.enqueue(2);
+	cout << q.dequeue() << endl;
+	q.enqueue(3);
+	cout << q.dequeue() << endl;
+	cout << q.dequeue() << endl;
+	q.enqueue(4);
+	cout << q.dequeue() << endl;
+	cout << q.size() << endl;
     cout << endl;
 
     // part 3
@@ -87,7 +93,7 @@ int main()
     cout << endl;
 
     cout << "Time taken to run the above code is " << timeTaken(start) << "ms" << endl;
-
+	
     return 0;
 }
 

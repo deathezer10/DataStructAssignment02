@@ -36,7 +36,12 @@ LinkedList::LinkedList() {
 }
 
 LinkedList::~LinkedList() {
-	// todo delete?
+	// Delete existing nodes
+	while (head_) {
+		Node* old = head_;
+		head_ = head_->next;
+		delete old;
+	}
 }
 
 void LinkedList::push_front(int data) {
@@ -127,7 +132,7 @@ void LinkedList::insert_at(int pos, int data) {
 		return;
 	}
 
-	if (pos > (size() - 1)) {
+	if (pos > static_cast<int>(size() - 1)) {
 		push_back(data);
 		return;
 	}
@@ -153,29 +158,19 @@ void LinkedList::insert_at(int pos, int data) {
 
 int LinkedList::pop_at(int pos) {
 
-	if (!head_) {
+	if (!head_) 
 		return 0;
-	}
 
-	if (pos <= 0) {
-		return pop_front();		
-	}
+	if (pos <= 0) 
+		return pop_front();
 
-	if (pos > (size() - 1)) {
+	if (pos > static_cast<int>(size() - 1)) 
 		return 0;
-	}
 
 	Node* curr = head_;
 	Node* temp = 0;
 	size_t index = 0;
-
-	// First element
-	if (index == pos) {
-		temp = curr;
-		head_ = curr->next;
-		return temp->data;
-	}
-
+	
 	while (curr->next) {
 
 		if (index == (pos - 1)) {
@@ -196,7 +191,7 @@ int LinkedList::pop_at(int pos) {
 		index++;
 
 	}
-
+	return 0;
 }
 
 size_t LinkedList::size() {
@@ -218,20 +213,72 @@ size_t LinkedList::size() {
 // Queue stuff
 //*******************************************************************//
 Queue::Queue() {
+	front_ = 0;
+	back_ = 0;
 }
 
 Queue::~Queue() {
+	// Delete existing nodes
+	while (front_) {
+		Node* old = front_;
+		front_ = front_->next;
+		delete old;
+	}
 }
 
 void Queue::enqueue(int data) {
+	Node* newNode = new Node(data);
+
+	if (!front_ && !back_) {
+		front_ = newNode;
+		back_ = newNode;
+		return;
+	}
+	
+	back_->next = newNode;
+	back_ = newNode;
 }
 
 int Queue::dequeue() {
-	return 0;
+
+	if (!front_ && !back_)
+		return 0;
+	
+	int returnValue = front_->data;
+
+	if (!front_->next) {
+		delete front_;
+		front_ = 0;
+		back_ = 0;
+		return returnValue;
+	}
+
+	Node* nextNode = front_->next;
+
+	delete front_;
+
+	front_ = nextNode;
+
+
+	if (front_ == back_) {
+		back_ = 0;
+	}
+
+	return returnValue;
 }
 
 size_t Queue::size() {
-	return 0;
+	if (!front_)
+		return 0;
+
+	Node* curr = front_;
+	size_t count = 1;
+
+	while (curr->next) {
+		curr = curr->next;
+		count++;
+	}
+	return count;
 }
 
 //*******************************************************************//
