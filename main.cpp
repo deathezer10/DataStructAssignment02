@@ -42,7 +42,14 @@ int main() {
 	cout << ll.pop_back() << endl;
 	ll.insert_at(5, 10);
 	cout << ll.pop_at(1) << endl;
+	/*
+	for (int i = 0; i < 40000; ++i) {
+	ll.push_back(i); // Traversing the list is so slow :(
+	}
+	*/
 	cout << endl;
+
+	cout << "Time taken to run the above code is " << timeTaken(start) << "ms" << endl << endl;
 
 	// part 2
 	cout << "Part 2" << endl;
@@ -103,7 +110,6 @@ int main() {
 	}
 	cout << endl;
 
-	cout << "Time taken to run the above code is " << timeTaken(start) << "ms" << endl;
 
 	return 0;
 }

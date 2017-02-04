@@ -48,10 +48,11 @@ void LinkedList::push_front(int data) {
 
 	Node* newNode = new Node(data);
 
-	if (!head_) {
+	if (!head_) { // empty
 		head_ = newNode;
 	}
 	else {
+		// swap the head with new node
 		newNode->next = head_;
 		head_ = newNode;
 	}
@@ -66,6 +67,7 @@ void LinkedList::push_back(int data) {
 	else {
 		Node* curr = head_;
 
+		// traverse to the end and insert the new node 
 		while (curr->next) {
 			curr = curr->next;
 		}
@@ -83,6 +85,7 @@ int LinkedList::pop_front() {
 	int returnvalue = head_->data;
 
 	if (head_->next) {
+		// delete and replace current head
 		head_ = head_->next;
 		delete temp;
 	}
@@ -104,16 +107,19 @@ int LinkedList::pop_back() {
 
 	if (curr->next) { // if list is > 1
 
+		// loop top just before the last element
 		while (curr->next->next) {
 			curr = curr->next;
 		}
 
+		// get value of last element and then delete the node
 		returnValue = curr->next->data;
 		delete curr->next;
 		curr->next = 0;
 
 	}
 	else {
+		// pop_front since there is only 1 element
 		return pop_front();
 	}
 
@@ -122,16 +128,19 @@ int LinkedList::pop_back() {
 
 void LinkedList::insert_at(int pos, int data) {
 
+	// empty list
 	if (!head_) {
 		push_back(data);
 		return;
 	}
 
+	// check negative
 	if (pos <= 0) {
 		push_front(data);
 		return;
 	}
 
+	// invalid position
 	if (pos > (static_cast<int>(size()) - 1)) {
 		push_back(data);
 		return;
@@ -143,6 +152,7 @@ void LinkedList::insert_at(int pos, int data) {
 
 	while (curr->next) {
 
+		// traverse until position is reached
 		if (index == (pos - 1)) {
 			newNode->next = curr->next;
 			curr->next = newNode;
@@ -158,12 +168,15 @@ void LinkedList::insert_at(int pos, int data) {
 
 int LinkedList::pop_at(int pos) {
 
+	// empty list
 	if (!head_)
 		return 0;
 
+	// negative check
 	if (pos <= 0)
 		return pop_front();
 
+	// invalid position
 	if (pos > (static_cast<int>(size()) - 1))
 		return 0;
 
@@ -173,10 +186,12 @@ int LinkedList::pop_at(int pos) {
 
 	while (curr->next) {
 
+		// loop until position is reached
 		if (index == (pos - 1)) {
 
 			temp = curr->next;
 
+			// fill in the gap in between the 2 nodes
 			if (curr->next->next) {
 				curr->next = curr->next->next;
 			}
@@ -229,7 +244,7 @@ Queue::~Queue() {
 void Queue::enqueue(int data) {
 	Node* newNode = new Node(data);
 
-	if (!front_ && !back_) {
+	if (!front_ && !back_) { // empty list
 		front_ = newNode;
 		back_ = newNode;
 		return;
@@ -241,7 +256,7 @@ void Queue::enqueue(int data) {
 
 int Queue::dequeue() {
 
-	if (!front_ && !back_)
+	if (!front_)
 		return 0;
 
 	int returnValue = front_->data;
@@ -302,7 +317,7 @@ void Stack::push(int data) {
 		top_ = newNode;
 	}
 	else {
-		newNode->next = top_;
+		newNode->next = top_; // append backwards since its a stack
 		top_ = newNode;
 	}
 }
@@ -348,12 +363,12 @@ bool Brackets(const string& input) {
 	};
 
 	std::stack<char> stk_Brackets;
-	int pendingBrackets = 0; // pending brackets waiting to be closed
+	int pendingBrackets = 0; // number of pending brackets waiting to be closed
 
 	for (char strChar : input) {
-		if (map_Brackets.count(strChar)) {
+		if (map_Brackets.count(strChar)) { // valid open bracket?
 			++pendingBrackets;
-			stk_Brackets.push(map_Brackets.at(strChar));
+			stk_Brackets.push(map_Brackets.at(strChar)); // push in closed bracket value
 		}
 		else {
 			if (!stk_Brackets.empty() && stk_Brackets.top() == strChar) {
@@ -366,6 +381,7 @@ bool Brackets(const string& input) {
 		}
 	}
 
+	// we still have some opened brackets
 	if (pendingBrackets) {
 		return false;
 	}
@@ -376,14 +392,14 @@ bool Brackets(const string& input) {
 // Query machine, hits
 void QueryMachine(vector<int>& data, vector<int>& queries, vector<unsigned int>& results) {
 
-	map<int, int> map_Numcounter;
+	map<int, int> map_Numcounter; // <Number, HitCount>
 
 	for (vector<int>::iterator it = data.begin(); it != data.end(); ++it) {
-		map_Numcounter[*it]++;
+		map_Numcounter[*it]++; // add Key if doesn't exist and increment value by 1 if exists
 	}
 
 	for (vector<int>::iterator it = queries.begin(); it != queries.end(); ++it) {
-		results.push_back(map_Numcounter[*it]);
+		results.push_back(map_Numcounter[*it]); // retrieve hitcount from map and store it in the resultant vector
 	}
 
 }
