@@ -132,14 +132,14 @@ void LinkedList::insert_at(int pos, int data) {
 		return;
 	}
 
-	if (pos > static_cast<int>(size() - 1)) {
+	if (pos > (static_cast<int>(size()) - 1)) {
 		push_back(data);
 		return;
 	}
 
 	Node* newNode = new Node(data);
 	Node* curr = head_;
-	size_t index = 0;
+	int index = 0;
 
 	while (curr->next) {
 
@@ -158,19 +158,19 @@ void LinkedList::insert_at(int pos, int data) {
 
 int LinkedList::pop_at(int pos) {
 
-	if (!head_) 
+	if (!head_)
 		return 0;
 
-	if (pos <= 0) 
+	if (pos <= 0)
 		return pop_front();
 
-	if (pos > static_cast<int>(size() - 1)) 
+	if (pos > (static_cast<int>(size()) - 1))
 		return 0;
 
 	Node* curr = head_;
 	Node* temp = 0;
-	size_t index = 0;
-	
+	int index = 0;
+
 	while (curr->next) {
 
 		if (index == (pos - 1)) {
@@ -234,7 +234,7 @@ void Queue::enqueue(int data) {
 		back_ = newNode;
 		return;
 	}
-	
+
 	back_->next = newNode;
 	back_ = newNode;
 }
@@ -243,9 +243,10 @@ int Queue::dequeue() {
 
 	if (!front_ && !back_)
 		return 0;
-	
+
 	int returnValue = front_->data;
 
+	// Last element in queue
 	if (!front_->next) {
 		delete front_;
 		front_ = 0;
@@ -254,11 +255,8 @@ int Queue::dequeue() {
 	}
 
 	Node* nextNode = front_->next;
-
 	delete front_;
-
 	front_ = nextNode;
-
 
 	if (front_ == back_) {
 		back_ = 0;
@@ -285,27 +283,93 @@ size_t Queue::size() {
 // Stack stuff
 //*******************************************************************//
 Stack::Stack() {
-
+	top_ = 0;
 }
 
 Stack::~Stack() {
+	// Delete existing nodes
+	while (top_) {
+		Node* old = top_;
+		top_ = top_->next;
+		delete old;
+	}
 }
 
 void Stack::push(int data) {
+	Node* newNode = new Node(data);
+
+	if (!top_) {
+		top_ = newNode;
+	}
+	else {
+		newNode->next = top_;
+		top_ = newNode;
+	}
 }
 
 int Stack::pop() {
-	return 0;
+	if (!top_)
+		return 0;
+
+	int returnValue = top_->data;
+	Node* temp = top_;
+
+	top_ = top_->next;
+
+	delete temp;
+
+	return returnValue;
 }
 
 size_t Stack::size() {
-	return 0;
+	if (!top_)
+		return 0;
+
+	Node* curr = top_;
+	size_t count = 1;
+
+	while (curr->next) {
+		curr = curr->next;
+		count++;
+	}
+	return count;
 }
 
 
 
 // Balanced parenthesis
 bool Brackets(const string& input) {
+
+	const map<char, char> map_Brackets{
+		{ '(', ')' },
+		{ '{', '}' },
+		{ '[', ']' },
+		{ '<', '>' },
+	};
+
+	std::stack<char> stk_Brackets;
+	int pendingBrackets = 0;
+
+	for (char strChar : input) {
+		if (map_Brackets.count(strChar)) {
+			pendingBrackets++;
+			stk_Brackets.push(map_Brackets.at(strChar));
+		}
+		else {
+			if (!stk_Brackets.empty() && stk_Brackets.top() == strChar) {
+				pendingBrackets--;
+				stk_Brackets.pop();
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	if (pendingBrackets) {
+		return false;
+	}
+
 	return true;
 }
 
