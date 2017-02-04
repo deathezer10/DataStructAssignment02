@@ -70,29 +70,28 @@ int main() {
 
 	// part 4
 	cout << "Part 4" << endl;
-	const char* input1 = "()";
-	const char* input2 = "(<))";	
-	const char* input3 = "(<))";
-	const char* input4 = "{<[()]>}";
-	const char* input5 = "()()[]<>{{[{}]}}";
-	const char* myInput = "((]([)]";
-	std::string tests[5] = {
+	std::string tests[11] = {
 		"()[]<>{}",
 		"(<",
 		"]}",
 		"()<",
 		"(][)",
+		"((]([)]",
+		"()()[]<>{{[{}]}}",
+		"{<[()]>}",
+		"(<))",
+		"(<))",
+		"()"
 	};
 	for (std::string s : tests) {
 		cout << Brackets(s) << endl;
 	}
-	//cout << Brackets(myInput) << endl;
 	cout << endl;
 
 
 	// part 5
 	cout << "Part 5" << endl;
-	int dataArray[] = { 1, 4, 5, 6, 9, 1, 1, 4 };
+	int dataArray[] = { 1, 2, 3, 4, 3, 2, 2, 6 };
 	int queryArray[] = { 1, 2, 3 };
 
 	vector<int> data(dataArray, dataArray + sizeof(dataArray) / sizeof(dataArray[0]));

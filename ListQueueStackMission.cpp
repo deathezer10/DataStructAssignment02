@@ -150,7 +150,7 @@ void LinkedList::insert_at(int pos, int data) {
 		}
 
 		curr = curr->next;
-		index++;
+		++index;
 
 	}
 
@@ -188,7 +188,7 @@ int LinkedList::pop_at(int pos) {
 		}
 
 		curr = curr->next;
-		index++;
+		++index;
 
 	}
 	return 0;
@@ -204,7 +204,7 @@ size_t LinkedList::size() {
 
 	while (curr->next) {
 		curr = curr->next;
-		count++;
+		++count;
 	}
 	return count;
 }
@@ -274,7 +274,7 @@ size_t Queue::size() {
 
 	while (curr->next) {
 		curr = curr->next;
-		count++;
+		++count;
 	}
 	return count;
 }
@@ -330,7 +330,7 @@ size_t Stack::size() {
 
 	while (curr->next) {
 		curr = curr->next;
-		count++;
+		++count;
 	}
 	return count;
 }
@@ -348,11 +348,11 @@ bool Brackets(const string& input) {
 	};
 
 	std::stack<char> stk_Brackets;
-	int pendingBrackets = 0;
+	int pendingBrackets = 0; // pending brackets waiting to be closed
 
 	for (char strChar : input) {
 		if (map_Brackets.count(strChar)) {
-			pendingBrackets++;
+			++pendingBrackets;
 			stk_Brackets.push(map_Brackets.at(strChar));
 		}
 		else {
@@ -375,4 +375,15 @@ bool Brackets(const string& input) {
 
 // Query machine, hits
 void QueryMachine(vector<int>& data, vector<int>& queries, vector<unsigned int>& results) {
+
+	map<int, int> map_Numcounter;
+
+	for (vector<int>::iterator it = data.begin(); it != data.end(); ++it) {
+		map_Numcounter[*it]++;
+	}
+
+	for (vector<int>::iterator it = queries.begin(); it != queries.end(); ++it) {
+		results.push_back(map_Numcounter[*it]);
+	}
+
 }
